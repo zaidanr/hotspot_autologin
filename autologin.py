@@ -1,3 +1,15 @@
+"""
+This script attempts to automatically log in to a hotspot network.
+
+It first tries to log in with the user's credentials (`USER` and `PASW`).
+If that fails because the account is already in use, it will then try to
+log in with a series of randomly generated credentials from a wordlist
+file (`wl.txt`).
+
+The script requires the following constants to be set:
+    USER (str): The username for the primary account.
+    PASW (str): The password for the primary account.
+"""
 import requests
 import random
 
